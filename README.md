@@ -2,6 +2,8 @@
 Hello! This is the official GradientOS source code.
 
 Here, lies the GradientOS source as well as the building command that I use to build GradientOS source code into WebAssembly.
+
+**HUGE thanks to whoever wrote [this article](https://compile.fi/canvas-filled-three-ways-js-webassembly-and-webgl/) on Finnish site for helping me start out bring out my true power in GradientOS.**
 ## Contributing
 Contributing, as always, is done by forking, committing changes and making a pull request.
 
