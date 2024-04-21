@@ -52,12 +52,8 @@ void fillRectOnScr(int x, int y, int w, int h, int hex) { // ...since 2024/04/15
 	}
 }
 
-void drawLineOnScr(int xy[4], int hex) { // Code from Wikipedia, fixed from previous algo since 2024/04/21.
-	int x0, y0, x1, y1, dX, incrX, dY, incrY, err, err2;
-	x0 = xy[0];
-	y0 = xy[1];
-	x1 = xy[2];
-	y1 = xy[3];
+void drawLineOnScr(int x0, int y0, int x1, int y1, int hex) { // Code from Wikipedia, fixed from previous algo since 2024/04/21.
+	int dX, incrX, dY, incrY, err, err2;
 	dX = abs(x1 - x0);
 	incrX = x0 < x1 ? 1 : -1;
 	dY = 0 - abs(y1 - y0);
@@ -97,11 +93,11 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 		audio = 1000;
 		fillRectOnScr(12, 128, 64, 24, 0x00ffff);
 	}
-	drawLineOnScr((int[]){2, 2, 12, 16}, 0x000000);
+	drawLineOnScr(2, 2, 12, 16, 0x000000);
 	if (lineX > 200) lineX = 24;
-	drawLineOnScr((int[]){lineX, 24, 128, 32}, 0xff00ff);
+	drawLineOnScr(lineX, 24, 128, 32, 0xff00ff);
 	lineX += 1;
-	drawLineOnScr((int[]){128, 128, 256, 128}, 0x00ff80);
+	drawLineOnScr(128, 128, 256, 128, 0x00ff80);
 	return audio;
 }
 
