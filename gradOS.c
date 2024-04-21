@@ -21,6 +21,7 @@ int height = 216;
 int scrArea;
 int *screen;
 int initCol = 0xf5a097;
+int lineX = 24;
 
 void getXYFrom1D(int px, int *x, int *y) {
 	*x = px % width;
@@ -51,30 +52,31 @@ void fillRectOnScr(int x, int y, int w, int h, int hex) { // ...since 2024/04/15
 	}
 }
 
-void drawLineOnScr(int xy[4], int hex) { // ...Using Bresnaham's line algo since 2024/20/04
-	int x0, y0, x1, y1, dX, dY, deci, xIncr, yIncr, currX, currY;
-	x0 = round(xy[0]);
-	y0 = round(xy[1]);
-	x1 = round(xy[2]);
-	y1 = round(xy[3]);
+void drawLineOnScr(int xy[4], int hex) { // Code from Wikipedia, fixed from previous algo since 2024/04/21.
+	int x0, y0, x1, y1, dX, incrX, dY, incrY, err, err2;
+	x0 = xy[0];
+	y0 = xy[1];
+	x1 = xy[2];
+	y1 = xy[3];
 	dX = abs(x1 - x0);
-	dY = abs(y1 - y0);
-	deci = 2 * dY - dX;
-	xIncr = x0 < x1 ? 1 : -1;
-	yIncr = y0 < y1 ? 1 : -1;
-	currX = x0;
-	currY = y0;
-	setPixel(currX, currY, hex);
-	int count = 0;
-	while (count < dX) {
-		if (deci > 0) {
-			currY += yIncr;
-			deci = deci - 2 * dX;
+	incrX = x0 < x1 ? 1 : -1;
+	dY = 0 - abs(y1 - y0);
+	incrY = y0 < y1 ? 1 : -1;
+	err = dX + dY;
+	while (true) {
+		setPixel(x0, y0, hex);
+		if ((x0 == x1) && (y0 == y1)) break;
+		err2 = err * 2;
+		if (err2 >= dY) {
+			if (x0 == x1) break;
+			err = err + dY;
+			x0 += incrX;
 		}
-		currX += xIncr;
-		deci = deci + 2 * dY;
-		setPixel(round(currX), round(currY), hex);
-		count += 1;
+		if (err2 <= dX) {
+			if (y0 == y1) break;
+			err = err + dX;
+			y0 += incrY;
+		}
 	}
 }
 
@@ -96,6 +98,10 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 		fillRectOnScr(12, 128, 64, 24, 0x00ffff);
 	}
 	drawLineOnScr((int[]){2, 2, 12, 16}, 0x000000);
+	if (lineX > 200) lineX = 24;
+	drawLineOnScr((int[]){lineX, 24, 128, 32}, 0xff00ff);
+	lineX += 1;
+	drawLineOnScr((int[]){128, 128, 256, 128}, 0x00ff80);
 	return audio;
 }
 
