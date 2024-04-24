@@ -23,6 +23,12 @@ int *screen;
 int initCol = 0xf5a097;
 int lineX = 24;
 
+// clang-format off
+EM_JS(char*, netGet, (char* url), {
+	// Definition in JS source
+})
+// clang-format on
+
 void getXYFrom1D(int px, int *x, int *y) {
 	*x = px % width;
 	*y = (int)floor((double)px / width);
@@ -80,6 +86,7 @@ void EMSCRIPTEN_KEEPALIVE initScr() {
 	scrArea = width * height;
 	screen = (int*)malloc(scrArea * sizeof(int));
 	fillRectOnScr(0, 0, width, height, initCol);
+	netGet("https://google.com");
 }
 
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
@@ -90,7 +97,7 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	fillRectOnScr(44, 44, 32, 24, 0x00ff00);
 	fillRectOnScr(8, 48, 32, 32, 0x0000ff);
 	if ((frm % 16) < 8) {
-		audio = 1000;
+		audio = 500;
 		fillRectOnScr(12, 128, 64, 24, 0x00ffff);
 	}
 	drawLineOnScr(2, 2, 12, 16, 0x000000);

@@ -1,2 +1,3 @@
 @echo off
-emcc gradOS.c -Os -g2 -s WASM=1 -o gradOS.js && del gradOS.js
+emcc gradOS.c -Os -g2 -s WASM=1 -o gradOS.js -sEXPORTED_FUNCTIONS=_malloc
+rem && del gradOS.js
