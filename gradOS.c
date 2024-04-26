@@ -8,6 +8,7 @@
 	║ ╚══════╝ ╚═╝  . ╚════╝ ╚════╝  ╚══╝ ╚════╝ ╚═╝╚═╝  ╚═══╝ ╚══════╝ ╚══════╝ ║
 	╚════════════════════════════════════════════════════════════════════════════╝
 	Ⓒ GradientOS 2024-present. All rights reserved. Hosted by Neocities.
+	The JS source code is located at https://gradientos.neocities.org/wasm/loader.js
 */
 #include <stdio.h>
 #include <emscripten.h>
