@@ -8,6 +8,10 @@ Here, lies the GradientOS C source as well as the building command that I use to
 Contributing, as always, is done by forking, committing changes and making a pull request.
 
 Don't worry, I will see it.
+
+Even if there are too less contributors, I still respect all of them in my heart. ~~If only I am in the image, then I love noone.~~
+
+[![Contributors.](https://contrib.rocks/image/?repo=RixInGithub/gradientos)](https://github.com/RixInGithub/gradientos/graphs/contributors/)
 ## Building
 Firstly, clone this repo. Then...
 
