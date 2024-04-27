@@ -8,7 +8,7 @@
 	║ ╚══════╝ ╚═╝  . ╚════╝ ╚════╝  ╚══╝ ╚════╝ ╚═╝╚═╝  ╚═══╝ ╚══════╝ ╚══════╝ ║
 	╚════════════════════════════════════════════════════════════════════════════╝
 	Ⓒ GradientOS 2024-present. All rights reserved. Hosted by Neocities.
-	The JS source code is located at https://gradientos.neocities.org/wasm/loader.js
+	The JS source code is located at https://gradientos.neocities.org/wasm.js
 */
 #include <stdio.h>
 #include <emscripten.h>
@@ -32,6 +32,12 @@ bool didRightCl = false;
 EM_JS(char*, netGet, (char* url), {
 	// Definition in JS source
 })
+EM_JS(void, drawLett, (int x, int y, char ch, int hex), {
+	// Definition in JS source
+})
+EM_JS(int, getLettW, (char ch), {
+	// Definition in JS source
+})
 // clang-format on
 
 void getXYFrom1D(int px, int *x, int *y) {
@@ -45,6 +51,21 @@ int get1DFromXY(int x, int y) {
 
 void EMSCRIPTEN_KEEPALIVE setPixel(int x, int y, int hex) {
 	screen[get1DFromXY(x, y)] = hex;
+}
+
+void writeStr(int x, int y, char* str, int hex) {
+	int lettCount = x;
+	int count = 0;
+	int lettW;
+	char ch;
+	while (str[count] != *"\0") {
+		ch = (char)str[count];
+		lettW = getLettW(ch);
+		drawLett(lettCount, y, ch, hex);
+		lettCount += lettW;
+		lettCount += 1;
+		count += 1;
+	}
 }
 
 void fillRectOnScr(int x, int y, int w, int h, int hex) { // ...since 2024/04/15
@@ -97,7 +118,7 @@ void EMSCRIPTEN_KEEPALIVE initScr() {
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int x, y;
 	int audio = 0;
-	bool clicked = didClick
+	bool clicked = didClick;
 	fillRectOnScr(0, 0, width, height, initCol);
 	fillRectOnScr(8, 8, 48, 48, 0xff0000);
 	fillRectOnScr(44, 44, 32, 24, 0x00ff00);
@@ -116,6 +137,7 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 		setPixel(clX, clY, 0x0080ff);
 		audio = 1000;
 	}
+	writeStr(32, 32, "The quick brown fox jumped over the lazy dog.", 0x000000);
 	return audio;
 }
 

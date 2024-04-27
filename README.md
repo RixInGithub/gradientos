@@ -1,5 +1,5 @@
 # GradientOS C Source
-Hello! This is the official GradientOS C source code. If you're looking for the JS source code, take a look at https://gradientos.neocities.org/wasm/loader.js
+Hello! This is the official GradientOS C source code. If you're looking for the JS source code, take a look at https://gradientos.neocities.org/wasm.js
 
 Here, lies the GradientOS C source as well as the building command that I use to build it into WebAssembly.
 
