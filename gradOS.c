@@ -23,6 +23,10 @@ int scrArea;
 int *screen;
 int initCol = 0xf5a097;
 int lineX = 24;
+int clX = 0;
+int clY = 0;
+bool didClick = false;
+bool didRightCl = false;
 
 // clang-format off
 EM_JS(char*, netGet, (char* url), {
@@ -93,6 +97,7 @@ void EMSCRIPTEN_KEEPALIVE initScr() {
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int x, y;
 	int audio = 0;
+	bool clicked = didClick
 	fillRectOnScr(0, 0, width, height, initCol);
 	fillRectOnScr(8, 8, 48, 48, 0xff0000);
 	fillRectOnScr(44, 44, 32, 24, 0x00ff00);
@@ -106,6 +111,11 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	drawLineOnScr(lineX, 24, 128, 32, 0xff00ff);
 	lineX += 1;
 	drawLineOnScr(128, 128, 256, 128, 0x00ff80);
+	if (clicked) {
+		didClick = false;
+		setPixel(clX, clY, 0x0080ff);
+		audio = 1000;
+	}
 	return audio;
 }
 
@@ -116,3 +126,10 @@ int* EMSCRIPTEN_KEEPALIVE retScr() {return screen;}
 int EMSCRIPTEN_KEEPALIVE getWidth() {return width;}
 
 int EMSCRIPTEN_KEEPALIVE getHeight() {return height;}
+
+void EMSCRIPTEN_KEEPALIVE setClickXY(int x, int y, bool rightCl) {
+	didClick = true;
+	didRightCl = rightCl;
+	clX = x;
+	clY = y;
+}
