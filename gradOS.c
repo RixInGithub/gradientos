@@ -41,7 +41,7 @@ EM_JS(int, getLettW, (char ch), {
 EM_JS(void, print, (char* txt), {
 	// Definition in JS source
 	// This function is only here for debugging purposes.
-	// Example: print("Hello, world!")
+	// Example: print("Hello, world!");
 })
 // clang-format on
 
