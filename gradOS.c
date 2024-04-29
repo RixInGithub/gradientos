@@ -38,6 +38,11 @@ EM_JS(void, drawLett, (int x, int y, char ch, int hex), {
 EM_JS(int, getLettW, (char ch), {
 	// Definition in JS source
 })
+EM_JS(void, print, (char* txt), {
+	// Definition in JS source
+	// This function is only here for debugging purposes.
+	// Example: print("Hello, world!")
+})
 // clang-format on
 
 void getXYFrom1D(int px, int *x, int *y) {
@@ -109,6 +114,7 @@ void drawLineOnScr(int x0, int y0, int x1, int y1, int hex) { // Code from Wikip
 }
 
 void EMSCRIPTEN_KEEPALIVE initScr() {
+	print("Screen initialized.");
 	scrArea = width * height;
 	screen = (int*)malloc(scrArea * sizeof(int));
 	fillRectOnScr(0, 0, width, height, initCol);
