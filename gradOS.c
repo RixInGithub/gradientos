@@ -16,17 +16,18 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "wins.h"
 
 int width = 384;
 int height = 216;
 int scrArea;
 int *screen;
-int initCol = 0xf5a097;
+int initCol = 0x808080;
 int lineX = 24;
-int clX = 0;
-int clY = 0;
-bool didClick = false;
-bool didRightCl = false;
+int mouseX = 0;
+int mouseY = 0;
+bool isDown = false;
+int activeWin = -1;
 
 // clang-format off
 EM_JS(char*, netGet, (char* url), {
@@ -124,26 +125,11 @@ void EMSCRIPTEN_KEEPALIVE initScr() {
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int x, y;
 	int audio = 0;
-	bool clicked = didClick;
-	fillRectOnScr(0, 0, width, height, initCol);
-	fillRectOnScr(8, 8, 48, 48, 0xff0000);
-	fillRectOnScr(44, 44, 32, 24, 0x00ff00);
-	fillRectOnScr(8, 48, 32, 32, 0x0000ff);
-	if ((frm % 16) < 8) {
-		audio = 500;
-		fillRectOnScr(12, 128, 64, 24, 0x00ffff);
-	}
-	drawLineOnScr(2, 2, 12, 16, 0x000000);
-	if (lineX > 200) lineX = 24;
-	drawLineOnScr(lineX, 24, 128, 32, 0xff00ff);
-	lineX += 1;
-	drawLineOnScr(128, 128, 256, 128, 0x00ff80);
-	if (clicked) {
-		didClick = false;
-		setPixel(clX, clY, 0x0080ff);
-		audio = 1000;
-	}
-	writeStr(32, 32, "The quick brown fox jumped over the lazy dog.", 0x000000);
+	bool down = isDown;
+	if (isDown) {audio = 1000;}
+	drawLineOnScr(0, 0, 0, 15, 0xffffff);
+	drawLineOnScr(0, 0, 15, 0, 0xffffff);
+	drawLineOnScr(0, 16, 16, 16, 0x000000);
 	return audio;
 }
 
@@ -155,9 +141,11 @@ int EMSCRIPTEN_KEEPALIVE getWidth() {return width;}
 
 int EMSCRIPTEN_KEEPALIVE getHeight() {return height;}
 
-void EMSCRIPTEN_KEEPALIVE setClickXY(int x, int y, bool rightCl) {
-	didClick = true;
-	didRightCl = rightCl;
-	clX = x;
-	clY = y;
+void EMSCRIPTEN_KEEPALIVE setMouseXY(int x, int y) {
+	mouseX = x;
+	mouseY = y;
+}
+
+void EMSCRIPTEN_KEEPALIVE setMouseDown(bool smth) {
+	isDown = smth;
 }

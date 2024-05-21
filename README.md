@@ -30,4 +30,4 @@ Else, if you're on a UNIX-like system like Mac or Linux, run:
 ```
 I didn't test the UNIX-like command, so keep that in mind.
 
-If something goes wrong during building, make sure to open an issue with the error text.
+If something goes wrong during building, make sure to open an issue with the error log.
