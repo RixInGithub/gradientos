@@ -131,7 +131,7 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int audio = 0;
 	bool down = isDown;
 	if (isDown) {audio = 1000;}
-	fillRectOnScr(0, 0, width, appSelH, 0xff00ff)
+	fillRectOnScr(0, 0, width, appSelH, 0xff00ff);
 	return audio;
 }
 
