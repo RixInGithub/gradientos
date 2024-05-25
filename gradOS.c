@@ -23,6 +23,8 @@ int height = 216;
 int scrArea;
 int *screen;
 int appSelH = 4 + (1 * 2) + ((13 * (7 - 1)) + 10); // 4 = (((border width <1>) * 2) * 2; (1 * 2) = padding on top and bottom (1px)
+int appSelPos;
+int appSelW;
 int initCol = 0x808080;
 int mouseX = 0;
 int mouseY = 0;
@@ -120,7 +122,8 @@ void EMSCRIPTEN_KEEPALIVE init() {
 	screen = (int*)malloc(scrArea * sizeof(int));
 	fillRectOnScr(0, 0, width, height, initCol);
 	// netGet("https://google.com"); Seems like this thing works fine; will work on return checks pretty soon.
-	
+	appSelPos = (width - appSelH) / 2;
+	appSelH = height - (appSelPos * 2);
 }
 
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
@@ -128,7 +131,7 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int audio = 0;
 	// bool down = isDown;
 	if (isDown) {audio = 1000;}
-	fillRectOnScr(0, 0, width, appSelH, 0xff00ff);
+	fillRectOnScr(appSelPos, appSelPos, appSelW, appSelH, 0xff00ff);
 	return audio;
 }
 
