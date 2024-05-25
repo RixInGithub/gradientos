@@ -1,12 +1,25 @@
 #include "wins.h"
-#include <stdbool.h>
+#include <string.h>
 
-void wins_moveByOffset(Window *win, int xOffset, int yOffset) {
-	win->pos[0] += xOffset;
-	win->pos[1] += yOffset;
+char wins_titles[256][256];
+
+void wins_add(const char *title) {
+	int index = -1;
+	int count = 0;
+	while (count < 256) {
+		if (wins_titles[count][0] == "\0") {
+			index = count;
+			break;
+		}
+		count += 1;
+	}
+	if (index < 0) return;
+	strncpy(wins_titles[index], title, 255);
+	wins_titles[index][255] = "\0";
 }
 
-Window wins_new(int x, int y, char title[]) {
-	Window res = {{x, y}, *title};
-	return res;
+void wins_remove(int index) {
+	if ((index >= 0) && (index < 256)) {
+		wins_titles[index][0] = "\0";
+	}
 }

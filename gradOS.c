@@ -17,13 +17,16 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "wins.h"
+#define TXT_BORD 1 // Cell bottom padding, border width, and margin
+#define TXT_H    (10 + (TXT_BORD * 3))
+#define CELLS    4
 
 int width = 384;
 int height = 216;
 int scrArea;
 int *screen;
+int appSelH = 4 + ((TXT_H * (CELLS - 1)) + 10); // 4 = (((border width <1>) * 2) * 2)
 int initCol = 0x808080;
-int lineX = 24;
 int mouseX = 0;
 int mouseY = 0;
 bool isDown = false;
@@ -114,12 +117,13 @@ void drawLineOnScr(int x0, int y0, int x1, int y1, int hex) { // Code from Wikip
 	}
 }
 
-void EMSCRIPTEN_KEEPALIVE initScr() {
+void EMSCRIPTEN_KEEPALIVE init() {
 	print("Screen initialized.");
 	scrArea = width * height;
 	screen = (int*)malloc(scrArea * sizeof(int));
 	fillRectOnScr(0, 0, width, height, initCol);
-	netGet("https://google.com");
+	// netGet("https://google.com"); Seems like this thing works fine; will work on return checks pretty soon.
+	
 }
 
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
@@ -127,9 +131,7 @@ int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int audio = 0;
 	bool down = isDown;
 	if (isDown) {audio = 1000;}
-	drawLineOnScr(0, 0, 0, 15, 0xffffff);
-	drawLineOnScr(0, 0, 15, 0, 0xffffff);
-	drawLineOnScr(0, 16, 16, 16, 0x000000);
+	
 	return audio;
 }
 

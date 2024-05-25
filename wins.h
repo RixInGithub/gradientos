@@ -1,14 +1,7 @@
 #ifndef WINS_H
 #define WINS_H
-#include <stdbool.h>
+extern char wins_titles[256][256];
 
-typedef struct {
-	int pos[2];
-	char title[256];
-} Window;
-
-void wins_moveByOffset(Window *window, int xOffset, int yOffset);
-
-Window wins_new(int x, int y, char title[]);
-
+void wins_add(const char *title);
+void wins_remove(int index);
 #endif
