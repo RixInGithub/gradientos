@@ -15,11 +15,11 @@ void wins_add(const char *title) {
 	}
 	if (index < 0) return;
 	strncpy(wins_titles[index], title, 255);
-	wins_titles[index][255] = "\0";
+	wins_titles[index][255] = *"\0";
 }
 
 void wins_remove(int index) {
 	if ((index >= 0) && (index < 256)) {
-		wins_titles[index][0] = "\0";
+		wins_titles[index][0] = *"\0";
 	}
 }
