@@ -122,7 +122,7 @@ void EMSCRIPTEN_KEEPALIVE init() {
 	screen = (int*)malloc(scrArea * sizeof(int));
 	fillRectOnScr(0, 0, width, height, initCol);
 	// netGet("https://google.com"); Seems like this thing works fine; will work on return checks pretty soon.
-	appSelPos = (width - appSelW) / 2;
+	appSelPos = (height - appSelH) / 2;
 	appSelW = width - (appSelPos * 2);
 }
 
