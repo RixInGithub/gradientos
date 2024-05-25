@@ -22,7 +22,7 @@ int width = 384;
 int height = 216;
 int scrArea;
 int *screen;
-int appSelH = 4 + ((13 * (7 - 1)) + 10); // 4 = (((border width <1>) * 2) * 2)
+int appSelH = 4 + (1 * 2) + ((13 * (7 - 1)) + 10); // 4 = (((border width <1>) * 2) * 2; (1 * 2) = padding on top and bottom (1px)
 int initCol = 0x808080;
 int mouseX = 0;
 int mouseY = 0;
