@@ -129,7 +129,7 @@ void EMSCRIPTEN_KEEPALIVE init() {
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int x, y;
 	int audio = 0;
-	bool down = isDown;
+	// bool down = isDown;
 	if (isDown) {audio = 1000;}
 	fillRectOnScr(0, 0, width, appSelH, 0xff00ff);
 	return audio;
