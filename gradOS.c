@@ -17,15 +17,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "wins.h"
-#define TXT_BORD 1 // Cell bottom padding, border width, and margin
-#define TXT_H    (10 + (TXT_BORD * 3))
-#define CELLS    4
 
 int width = 384;
 int height = 216;
 int scrArea;
 int *screen;
-int appSelH = 4 + ((TXT_H * (CELLS - 1)) + 10); // 4 = (((border width <1>) * 2) * 2)
+int appSelH = 4 + ((13 * (7 - 1)) + 10); // 4 = (((border width <1>) * 2) * 2)
 int initCol = 0x808080;
 int mouseX = 0;
 int mouseY = 0;
