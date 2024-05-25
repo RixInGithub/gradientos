@@ -7,7 +7,7 @@ void wins_add(const char *title) {
 	int index = -1;
 	int count = 0;
 	while (count < 256) {
-		if (wins_titles[count][0] == "\0") {
+		if (wins_titles[count][0] == *"\0") {
 			index = count;
 			break;
 		}
