@@ -16,13 +16,15 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "wins.h"
+#include "libs/wins.h"
+#define FONT_SIZ 10
+#define SEL_CELLS 8
 
 int width = 384;
 int height = 216;
 int scrArea;
 int *screen;
-int appSelH = 4 + (1 * 2) + ((13 * (7 - 1)) + 10); // 4 = (((border width <1>) * 2) * 2; (1 * 2) = padding on top and bottom (1px)
+int appSelH = 4 + (1 * 2) + ((FONT_SIZ + 3 * (SEL_CELLS - 1)) + FONT_SIZ); // 4 = (((border width <1>) * 2) * 2; (1 * 2) = padding on top and bottom (1px)
 int appSelPos;
 int appSelW;
 int initCol = 0x808080;
@@ -30,6 +32,7 @@ int mouseX = 0;
 int mouseY = 0;
 bool isDown = false;
 int activeWin = -1;
+int scroll = 0; // -1 = down; 0 = not scrolling; 1 = up;
 
 // clang-format off
 EM_JS(char*, netGet, (char* url), {
@@ -129,7 +132,7 @@ void EMSCRIPTEN_KEEPALIVE init() {
 int EMSCRIPTEN_KEEPALIVE render(int frm) {
 	int x, y;
 	int audio = 0;
-	// bool down = isDown;
+	fillRectOnScr(0, 0, width, height, initCol);
 	if (isDown) {audio = 1000;}
 	fillRectOnScr(appSelPos, appSelPos, appSelW, appSelH, 0xff00ff);
 	return audio;
@@ -150,4 +153,10 @@ void EMSCRIPTEN_KEEPALIVE setMouseXY(int x, int y) {
 
 void EMSCRIPTEN_KEEPALIVE setMouseDown(bool smth) {
 	isDown = smth;
+}
+
+void EMSCRIPTEN_KEEPALIVE setScrollMode(int m) {
+	if (m < 0) m = -1;
+	if (m > 0) m = 1;
+	scroll = m;
 }
